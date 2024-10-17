@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Dialpad</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add these lines for PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+</head>
+<body>
+    <div class="dialpad-container">
+        <div class="display">
+            <input type="tel" id="phoneNumber" readonly>
+        </div>
+        <div class="keypad">
+            <button class="key" data-value="1">1</button>
+            <button class="key" data-value="2">2<span class="sub">ABC</span></button>
+            <button class="key" data-value="3">3<span class="sub">DEF</span></button>
+            <button class="key" data-value="4">4<span class="sub">GHI</span></button>
+            <button class="key" data-value="5">5<span class="sub">JKL</span></button>
+            <button class="key" data-value="6">6<span class="sub">MNO</span></button>
+            <button class="key" data-value="7">7<span class="sub">PQRS</span></button>
+            <button class="key" data-value="8">8<span class="sub">TUV</span></button>
+            <button class="key" data-value="9">9<span class="sub">WXYZ</span></button>
+            <button class="key" data-value="*">*</button>
+            <button class="key" data-value="0">0<span class="sub">+</span></button>
+            <button class="key" data-value="#">#</button>
+        </div>
+        <div class="action-buttons">
+            <button id="callButton" class="call-button">Call</button>
+            <button id="deleteButton" class="delete-button">&#9003;</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <!-- Add this line to register the service worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => console.log('Service worker registered', reg))
+                .catch((err) => console.log('Service worker not registered', err));
+        }
+    </script>
+</body>
+</html>

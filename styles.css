@@ -1,0 +1,101 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.dialpad-container {
+    width: 100%;
+    max-width: 300px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.display {
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+#phoneNumber {
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background-color: #e0e0e0;
+}
+
+.key {
+    padding: 20px 0;
+    font-size: 24px;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.key:active {
+    background-color: #f0f0f0;
+}
+
+.sub {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #888;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.call-button, .delete-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.call-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.call-button:active {
+    background-color: #45a049;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-button:active {
+    background-color: #da190b;
+}
