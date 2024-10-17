@@ -3,12 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
     <title>Mobile Dialpad</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add these lines for PWA support -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+    <link rel="icon" type="image" href="image/whatsapp.png">
     <link rel="apple-touch-icon" href="icon-192x192.png">
+    <style>
+        #installPrompt {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1c1c1e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        #installPrompt h2 {
+            margin-top: 0;
+        }
+        #installPrompt .app-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 10px;
+            background-color: #4CAF50;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #installPrompt .app-icon img {
+            width: 40px;
+            height: 40px;
+        }
+        #installPrompt .app-url {
+            color: #8e8e93;
+            margin-bottom: 20px;
+        }
+        #installPrompt .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        #installPrompt button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #installButton {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #cancelButton {
+            background-color: #8e8e93;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="dialpad-container">
@@ -34,11 +87,52 @@
             <button id="deleteButton" class="delete-button">&#9003;</button>
         </div>
     </div>
+
+    <div id="installPrompt">
+        <div class="app-icon">
+            <img src="whatsapp.png" alt="App Icon">
+        </div>
+        <h2>Install Mobile Dialpad</h2>
+        <p class="app-url">https://aleembhd.github.io/as-an-app/</p>
+        <div class="buttons">
+            <button id="cancelButton">Cancel</button>
+            <button id="installButton">Install</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    <!-- Add this line to register the service worker -->
     <script>
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installButton = document.getElementById('installButton');
+        const cancelButton = document.getElementById('cancelButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.style.display = 'block';
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('App installed');
+                } else {
+                    console.log('App not installed');
+                }
+                deferredPrompt = null;
+            }
+            installPrompt.style.display = 'none';
+        });
+
+        cancelButton.addEventListener('click', () => {
+            installPrompt.style.display = 'none';
+        });
+
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
+            navigator.serviceWorker.register('/as-an-app/service-worker.js')
                 .then((reg) => console.log('Service worker registered', reg))
                 .catch((err) => console.log('Service worker not registered', err));
         }
